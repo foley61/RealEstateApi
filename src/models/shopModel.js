@@ -1,6 +1,12 @@
 const mongoose = require("mongoose")
 
 const shopSchema = ({
+    shopId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Main',
+        required: true,
+        unique: true,
+    },
     binaYas: {
         type: Number,
         required: true
@@ -42,8 +48,8 @@ const shopSchema = ({
         ticariKullanim: Array
     }
 },{
-    collection: "shops",
+    collection: "Shops",
     timestamps: true
 })
 
-module.exports = mongoose.model("Shops",shopSchema)
+module.exports = mongoose.model("Shop",shopSchema)

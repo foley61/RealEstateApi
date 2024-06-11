@@ -1,6 +1,12 @@
 const mongoose = require("mongoose")
 
 const landSchema = new mongoose.model({
+    landId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Main',
+        required: true,
+        unique: true,
+    },
     arsaTip: {
         type: String,
         required: true
@@ -38,4 +44,4 @@ const landSchema = new mongoose.model({
     timeStamps: true
 })
 
-module.exports = mongoose.model("land",landSchema)
+module.exports = mongoose.model("Land",landSchema)

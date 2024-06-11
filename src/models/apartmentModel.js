@@ -1,6 +1,12 @@
 const mongoose = require("mongoose")
 
 const apartmentSchema = new mongoose.Schema({
+    apartmentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Main',
+        required: true,
+        unique: true,
+    },
     m2brut: {
         type: Number,
         required: true
@@ -79,7 +85,7 @@ const apartmentSchema = new mongoose.Schema({
         required: true
     }
 }, {
-    collection: "apartments",
+    collection: "Apartments",
     timestamps: true
 })
 module.exports = mongoose.model("Apartment",apartmentSchema)

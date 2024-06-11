@@ -24,7 +24,7 @@ const TokenSchema = new mongoose.Schema({
     }
 
 }, {
-    collection: 'tokens',
+    collection: 'Tokens',
     timestamps: true
 })
 
