@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const {mongoose} = require("../configs/dbConnection")
 
 const apartmentSchema = new mongoose.Schema({
     apartmentId: {

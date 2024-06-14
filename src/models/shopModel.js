@@ -1,10 +1,10 @@
-const mongoose = require("mongoose")
+const {mongoose} = require("../configs/dbConnection")
 
-const shopSchema = ({
+
+const shopSchema = new mongoose.Schema({
     shopId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Main',
-        required: true,
         unique: true,
     },
     binaYas: {
@@ -48,7 +48,7 @@ const shopSchema = ({
         ticariKullanim: Array
     }
 },{
-    collection: "Shops",
+    collection: 'shops',
     timestamps: true
 })
 

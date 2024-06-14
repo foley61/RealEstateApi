@@ -1,9 +1,9 @@
 
-const Apartment = require('../models/apartmentModel');
+const Land = require('../models/landModel');
 const Main = require('../models/mainModel')
 /*
 {
-apartment:{
+Land:{
   datas: "asdasdasd"
 },
 main:{
@@ -14,21 +14,20 @@ main:{
 */
 module.exports = {
     create: async (req, res) => {
-        req.body.main.tip = "apartment"
-
+        req.body.main.tip = "land"
         const mainData = await Main.create(req.body.main)
-        req.body.apartment.apartmentId = mainData._id
-        const apartmentData = await Apartment.create(req.body.apartment)
+        req.body.land.landId = mainData._id
+        const LandData = await Land.create(req.body.land)
 
         res.status(201).send({
             mainData,
-            apartmentData,
+            LandData,
             message: "property saved"
         })
     },
     read: async (req, res) => {
 
-        const data = await Apartment.findOne({id: req.params.identity}).populate("apartmentId")
+        const data = await Land.findOne({id: req.params.identity}).populate("landId")
 
         res.status(200).send({
             data
@@ -36,11 +35,11 @@ module.exports = {
     },
     update: async (req, res) => {
 
-        const apartmentData = await Apartment.updateOne({ id: req.params.identity }, req.body.apartment)
+        const LandData = await Land.updateOne({ id: req.params.identity }, req.body.land)
         const mainData = await Main.updateOne({ id: req.params.identity }, req.body.main)
         res.status(200).send({
             error: false,
-            apartmentData,
+            LandData,
             mainData,
             message: "property updated successfully"
         })
@@ -48,7 +47,7 @@ module.exports = {
 
 
     delete: async (req, res) => {
-        const aptdata = await Apartment.deleteOne({ id: req.params.identity })
+        const aptdata = await Land.deleteOne({ id: req.params.identity })
         const maindata = await Main.deleteOne({ id: req.params.identity })
 
         res.status(204).send({

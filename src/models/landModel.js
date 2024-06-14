@@ -1,6 +1,7 @@
-const mongoose = require("mongoose")
+const {mongoose} = require("../configs/dbConnection")
 
-const landSchema = new mongoose.model({
+
+const landSchema = new mongoose.Schema({
     landId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Main',

@@ -1,7 +1,8 @@
 /* -------------------------------------------------------
     NODEJS EXPRESS | CLARUSWAY FullStack Team
 ------------------------------------------------------- */
-const mongoose = require("mongoose")
+const {mongoose} = require("../configs/dbConnection")
+
 /* ------------------------------------------------------- */
 // Token Model:
 

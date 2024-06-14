@@ -1,4 +1,5 @@
-const mongoose = require("mongoose")
+const {mongoose} = require("../configs/dbConnection")
+
 
 const mainSchema = new mongoose.Schema({
     tip: {
@@ -15,7 +16,6 @@ const mainSchema = new mongoose.Schema({
     },
     oda: {
         type: String,
-        required: true
     },
     m2: {
         type: Number,
@@ -23,7 +23,6 @@ const mainSchema = new mongoose.Schema({
     },
     katSayi: {
         type: Number,
-        required: true
     }
 },{
     collection: "Main",
