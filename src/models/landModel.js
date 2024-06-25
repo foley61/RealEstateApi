@@ -39,6 +39,9 @@ const landSchema = new mongoose.Schema({
     ilanOzelk: {
         altyapi: Array,
         arsaKonum: Array
+    },
+    paths: {
+      path: Array
     }
 },{
     collection: "Lands",
