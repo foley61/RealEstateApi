@@ -1,6 +1,8 @@
 
 const Apartment = require('../models/apartmentModel');
 const Main = require('../models/mainModel')
+const Image = require("../models/imagesModel")
+const fs = require("fs")
 /*
 {
 apartment:{
@@ -14,21 +16,35 @@ main:{
 */
 module.exports = {
     create: async (req, res) => {
-        req.body.main.tip = "apartment"
-
-        const mainData = await Main.create(req.body.main)
-        req.body.apartment.apartmentId = mainData._id
-        const apartmentData = await Apartment.create(req.body.apartment)
-
+        req.body.datas = JSON.parse(req.body.datas)
+       
+       
+        const uploadedFiles = req.files;
+        const savedImages = [];
+        const pathss = []
+        const namess = []
+       await uploadedFiles.map((files) => {pathss.push(files.path); namess.push(files.originalname)})
+  
+      
+   
+        req.body.datas.main.tip = "apartment"
+        req.body.datas.main.paths = pathss
+        req.body.datas.main.names = namess  
+        const mainData = await Main.create(req.body.datas.main) 
+        req.body.datas.apartment.apartmentId = mainData._id
+        req.body.propertyId = mainData._id
+     
+       
+        const apartmentData = await Apartment.create(req.body.datas.apartment)
         res.status(201).send({
-            mainData,
-            apartmentData,
+            mainData:mainData,
+            apartmentData:apartmentData,
             message: "property saved"
         })
     },
     read: async (req, res) => {
 
-        const data = await Apartment.findOne({id: req.params.identity}).populate("apartmentId")
+        const data = await Apartment.findOne({apartmentId: req.params.id}).populate("apartmentId")
 
         res.status(200).send({
             data
@@ -36,8 +52,8 @@ module.exports = {
     },
     update: async (req, res) => {
 
-        const apartmentData = await Apartment.updateOne({ id: req.params.identity }, req.body.apartment)
-        const mainData = await Main.updateOne({ id: req.params.identity }, req.body.main)
+        const apartmentData = await Apartment.updateOne({ apartmentId: req.params.id }, req.body.apartment)
+        const mainData = await Main.updateOne({ id: req.params.id }, req.body.main)
         res.status(200).send({
             error: false,
             apartmentData,
@@ -48,9 +64,24 @@ module.exports = {
 
 
     delete: async (req, res) => {
-        const aptdata = await Apartment.deleteOne({ id: req.params.identity })
-        const maindata = await Main.deleteOne({ id: req.params.identity })
-
+        const aptdata = await Apartment.deleteOne({ apartmentId: req.params.id })
+        const main = await Main.findOne({_id: req.params.id})      
+       
+        const paths = main.paths
+        paths.forEach(path => {
+            fs.rm(path, { recursive:true }, (err) => { 
+                if(err){ 
+                   
+                    console.error(err.message); 
+                    return; 
+                } 
+                console.log("File deleted successfully"); 
+                  
+              
+            }) 
+        })
+        const maindata = await Main.deleteOne({ id: req.params.id })
+      
         res.status(204).send({
             message: "Property deleted"
         })

@@ -16,6 +16,7 @@ const router = require('express').Router();
 const { isLogin } = require("../middlewares/permissions");
 
 router.post('/upload', upload.array('images', 12), Images.create);
+router.get('/upload', Images.read);
 
 
 module.exports = router;

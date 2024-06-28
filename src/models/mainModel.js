@@ -23,7 +23,15 @@ const mainSchema = new mongoose.Schema({
     },
     katSayi: {
         type: Number,
-    }
+    },
+    paths: {
+      
+    },
+    names: {
+     
+    },
+   
+ 
 },{
     collection: "Main",
     timestamps: true

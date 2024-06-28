@@ -23,6 +23,7 @@ app.use(express.json())
 app.use(express.urlencoded())
 dbConnection()
 app.use(require("./src/middlewares/authMiddleware"))
+app.use(require('./src/middlewares/queryHandler'))
 app.use('/', require('./src/routes/'))
 
 
@@ -34,7 +35,6 @@ app.all('/', (req, res) => {
         user: req.user,
     })
 })
-// app.use(require('./src/middlewares/queryHandler'))
 app.use(require('./src/middlewares/errorHandler'))
 app.listen(process.env.PORT, () => {
     console.log("server is running on this port", process.env.PORT)

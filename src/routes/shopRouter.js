@@ -1,10 +1,22 @@
 
 const shop = require("../controllers/shopController")
-const {isLogin} = require("../middlewares/permissions")
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now()
+      cb(null, uniqueSuffix + file.originalname)
+    }
+  })
+const upload = multer({ storage: storage })
 const router = require('express').Router()
-router.post('/add',isLogin, shop.create),
+const {isLogin} = require("../middlewares/permissions")
+
+router.post('/add',isLogin,upload.array('images', 12), shop.create),
 router.get("/:id", shop.read),
 router.put("/update/:id",isLogin, shop.update),
-router.delete('/delete/:id',isLogin, shop.delete)
+router.delete('/delete/:id', shop.delete)
 
 module.exports = router

@@ -6,9 +6,16 @@ const imageSchema = new mongoose.Schema({
     paths: {
         path: Array
     },
-    name: String,
-    type: String,
-    propertyId: String
+    names: {
+        name: Array
+    },
+   
+    propertyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Main',
+        required: true,
+        unique: true,
+    },
 },{
     collection: "Images",
     timeStamps: true
