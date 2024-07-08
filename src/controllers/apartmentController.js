@@ -12,7 +12,12 @@ main:{
   datas: "asdasdad" 
 }
 }
-
+       
+      
+   
+     
+    
+     
 */
 module.exports = {
     create: async (req, res) => {
@@ -51,9 +56,11 @@ module.exports = {
         })
     },
     update: async (req, res) => {
-
-        const apartmentData = await Apartment.updateOne({ apartmentId: req.params.id }, req.body.apartment)
-        const mainData = await Main.updateOne({ id: req.params.id }, req.body.main)
+       
+        req.body.datas = JSON.parse(req.body.datas)
+       
+        const apartmentData = await Apartment.updateOne({ apartmentId: req.params.id },req.body.datas.apartment)
+        const mainData = await Main.updateOne({ _id: req.params.id }, req.body.datas.main)
         res.status(200).send({
             error: false,
             apartmentData,
@@ -61,7 +68,38 @@ module.exports = {
             message: "property updated successfully"
         })
     },
-
+    imageUpdate: async(req,res)=> {
+        req.body.datas = JSON.parse(req.body.datas)
+        const main = await Main.findOne({_id: req.params.id})      
+       
+        const oldpaths = main.paths
+        oldpaths.forEach(path => {
+            fs.rm(path, { recursive:true }, (err) => { 
+                if(err){ 
+                   
+                    console.error(err.message); 
+                    return; 
+                } 
+                console.log("File deleted successfully"); 
+                  
+              
+            }) 
+        })
+        const uploadedFiles = req.files;
+        const savedImages = [];
+        const pathss = []
+        const namess = []
+       await uploadedFiles.map((files) => {pathss.push(files.path); namess.push(files.originalname)})
+   
+       req.body.datas.paths = pathss
+       req.body.datas.names = namess  
+       console.log(req.body.datas)
+       const mainData = await Main.updateOne({ _id: req.params.id }, req.body.datas)
+        res.status(200).send({
+            mainData
+        })
+    
+    },
 
     delete: async (req, res) => {
         const aptdata = await Apartment.deleteOne({ apartmentId: req.params.id })

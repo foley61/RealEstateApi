@@ -40,9 +40,9 @@ module.exports = {
         })
     },
     update: async (req, res) => {
-
-        const LandData = await Land.updateOne({ landId: req.params.id }, req.body.land)
-        const mainData = await Main.updateOne({ id: req.params.id }, req.body.main)
+        req.body.datas = JSON.parse(req.body.datas)
+        const LandData = await Land.updateOne({ landId: req.params.id }, req.body.datas.land)
+        const mainData = await Main.updateOne({ id: req.params.id }, req.body.datas.main)
         res.status(200).send({
             error: false,
             LandData,
@@ -51,6 +51,38 @@ module.exports = {
         })
     },
 
+    imageUpdate: async(req,res)=> {
+        req.body.datas = JSON.parse(req.body.datas)
+        const main = await Main.findOne({_id: req.params.id})      
+       
+        const oldpaths = main.paths
+        oldpaths.forEach(path => {
+            fs.rm(path, { recursive:true }, (err) => { 
+                if(err){ 
+                   
+                    console.error(err.message); 
+                    return; 
+                } 
+                console.log("File deleted successfully"); 
+                  
+              
+            }) 
+        })
+        const uploadedFiles = req.files;
+        const savedImages = [];
+        const pathss = []
+        const namess = []
+       await uploadedFiles.map((files) => {pathss.push(files.path); namess.push(files.originalname)})
+   
+       req.body.datas.paths = pathss
+       req.body.datas.names = namess  
+       console.log(req.body.datas)
+       const mainData = await Main.updateOne({ _id: req.params.id }, req.body.datas)
+        res.status(200).send({
+            mainData
+        })
+    
+    },
 
     delete: async (req, res) => {
         const aptdata = await Land.deleteOne({ landId: req.params.id })

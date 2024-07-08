@@ -20,7 +20,9 @@ app.use(limiter)
 
 require("dotenv").config()
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({
+    extended: true
+    }));
 dbConnection()
 app.use(require("./src/middlewares/authMiddleware"))
 app.use(require('./src/middlewares/queryHandler'))
