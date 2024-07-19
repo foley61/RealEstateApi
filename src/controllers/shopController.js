@@ -29,6 +29,7 @@ module.exports = {
         req.body.datas.main.tip = "shop"
         req.body.datas.main.paths = pathss
         req.body.datas.main.names = namess  
+        req.body.datas.main.kullanim =  req.body.datas.shop.kullanim  
         const mainData = await Main.create(req.body.datas.main) 
         req.body.datas.shop.shopId  = mainData._id
         req.body.propertyId = mainData._id

@@ -10,6 +10,10 @@ const mainSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    konum: {
+        type: String,
+        required: true
+    },
     fiyat: {
         type: Number,
         required: true
@@ -21,8 +25,20 @@ const mainSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    kullanim: {
+        type: String,
+ 
+    },
     katSayi: {
         type: Number,
+    },
+    tapuDurum: {
+        type: String,
+       
+    },
+    arsaDurum: {
+        type: String,
+       
     },
     paths: {
       

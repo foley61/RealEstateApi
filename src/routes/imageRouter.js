@@ -2,7 +2,7 @@ const multer = require('multer');
 const Images = require("../controllers/imageController")
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads')
+    cb(null, '../client/public/uploads')
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now()
