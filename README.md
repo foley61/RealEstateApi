@@ -22,4 +22,4 @@ The API's security has been significantly increased using the Helmet security mo
 
 Secure: The Helmet-powered API keeps your data safe and secure.
 
-User-Friendly: Get started immediately with our easy-to-use APIs.
+User-Friendly: Get started immediately with this easy-to-use APIs.
