@@ -7,9 +7,9 @@ const fs = require("fs")
 {
 apartment:{
   datas: "asdasdasd"
-},
+},  
 main:{
-  datas: "asdasdad" 
+  datas: "ne" 
 }
 }
        
